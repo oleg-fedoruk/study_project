@@ -1,13 +1,32 @@
 from rest_framework import serializers
 
-from .models import Movie, Review, Rating
+from .models import Movie, Review, Rating, Actor
 
 
 class MovieShortSerializer(serializers.ModelSerializer):
-    """Сериализация трёх полей модели Movie"""
+    """Сериализация 4 полей модели Movie"""
+    rating_user = serializers.BooleanField()
+    middle_star = serializers.IntegerField()
+
     class Meta:
         model = Movie
-        fields = ('title', 'tagline')
+        fields = ('title', 'tagline', 'category', 'rating_user', 'middle_star')
+
+
+class ActorShortSerializer(serializers.ModelSerializer):
+    """Сериализация 3 полей модели Actor"""
+
+    class Meta:
+        model = Actor
+        fields = ('id', 'name', 'image')
+
+
+class ActorFullSerializer(serializers.ModelSerializer):
+    """Сериализация всех полей модели Actor"""
+
+    class Meta:
+        model = Actor
+        fields = '__all__'
 
 
 class ReviewFullSerializer(serializers.ModelSerializer):
@@ -60,8 +79,8 @@ class CreateRatingSerializer(serializers.ModelSerializer):
 class MovieFullSerializer(serializers.ModelSerializer):
     """Сериализация всех полей модели Movie"""
     category = serializers.SlugRelatedField(slug_field='name', read_only=True)
-    directors = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
-    actors = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+    directors = ActorShortSerializer( read_only=True, many=True)
+    actors = ActorShortSerializer(read_only=True, many=True)
     genres = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
     reviews = ReviewDeatailSerializer(many=True)
 
