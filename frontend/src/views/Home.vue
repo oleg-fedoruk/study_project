@@ -157,7 +157,7 @@
                     </div>
                     <div class="left-ads-display col-lg-9">
                         <div class="row">
-                            <div v-for="movie in listMovie.result" :key="movie.id" class="col-md-4 product-men">
+                            <div v-for="movie in listMovie" :key="movie.id" class="col-md-4 product-men">
                                 <div class="product-shoe-info editContent text-center mt-lg-4" >
                                     <div class="men-thumb-item">
                                         <img :src="movie.poster" class="img-fluid" alt="" >
@@ -184,10 +184,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="grid-img-right mt-4 text-right bg bg1" >
-                            <span class="money editContent" >Flat 50% Off</span>
-                            <a href="moviesingle.html" class="btn" >Now</a>
-                        </div>-->
+                      <Pagination :total="total" :item="listMovie.length" @page-changed="loadListMovies"/>
                     </div>
                 </div>
             </div>
@@ -196,30 +193,37 @@
 </template>
 
 <script>
-
+import Pagination from "../components/Pagination";
 
 export default {
   name: 'Home',
   data() {
     return {
       listMovie: [],
-      listStar: [1, 2, 3, 4, 5]
+      listStar: [1, 2, 3, 4, 5],
+      page: 1,
+      total: 0
     }
   },
   created() {
-    this.loadListMovies()
+    this.loadListMovies(this.page)
   },
   methods: {
-    async loadListMovies() {
+    async loadListMovies(pageNumber) {
       this.listMovie = await fetch(
-          `${this.$store.getters.getServerUrl}/movie`
-      ).then(response => response.json())
+          `${this.$store.getters.getServerUrl}/movie?page=${pageNumber}`
+      ).then(response => response.json()
+      ).then(response => {
+        this.total = response.count
+        return response.result
+      })
     },
     goTo(id) {
       this.$router.push({name: 'Single', params: {id: id}})
     },
   },
   components: {
+    Pagination
   }
 }
 </script>
