@@ -1,3 +1,4 @@
 /django_movie/local_settings.py
-/django_movie/secrets.py
 /env/
+/django_movie/my_secrets.py
+/db.sqlite3

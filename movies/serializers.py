@@ -51,14 +51,14 @@ class FilterReviewListSerializer(serializers.ListSerializer):
         return super().to_representation(data)
 
 
-class ReviewDeatailSerializer(serializers.ModelSerializer):
+class ReviewDetailSerializer(serializers.ModelSerializer):
     """Сериализация отзывов"""
     children = RecursiveSerializer(many=True)
 
     class Meta:
         list_serializer_class = FilterReviewListSerializer
         model = Review
-        fields = ('name', 'text', 'children')
+        fields = ('id', 'name', 'text', 'children')
 
 
 class CreateRatingSerializer(serializers.ModelSerializer):
@@ -82,7 +82,7 @@ class MovieFullSerializer(serializers.ModelSerializer):
     directors = ActorShortSerializer( read_only=True, many=True)
     actors = ActorShortSerializer(read_only=True, many=True)
     genres = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
-    reviews = ReviewDeatailSerializer(many=True)
+    reviews = ReviewDetailSerializer(many=True)
 
     class Meta:
         model = Movie
