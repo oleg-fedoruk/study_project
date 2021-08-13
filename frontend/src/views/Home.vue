@@ -12,7 +12,7 @@
                                 <button class="btn1 btn" ><span class="fa fa-search" aria-hidden="true" ></span></button>
                             </form>
                         </div>
-                        <!--preference -->
+
                         <div class="left-side my-4">
                             <h3 class="sear-head editContent" >Жанры</h3>
                             <ul class="w3layouts-box-list">
@@ -34,8 +34,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- // preference -->
-                        <!-- discounts -->
+
                         <div class="left-side">
                             <h3 class="sear-head editContent" >Год</h3>
                             <ul class="w3layouts-box-list">
@@ -45,8 +44,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- //discounts -->
-                        <!-- reviews -->
+
                         <div class="customer-rev left-side my-4">
                             <h3 class="sear-head editContent" >Рейтинг</h3>
                             <ul class="w3layouts-box-list">
@@ -166,7 +164,7 @@
                                     </div>
                                     <div class="item-info-product">
                                         <h4 class="">
-                                            <a href="#" class="editContent">{{movie.title}}</a>
+                                            <a @click="goTo(movie.id)" class="editContent">{{movie.title}}</a>
                                         </h4>
 
                                         <div class="product_price">
@@ -216,8 +214,10 @@ export default {
       this.listMovie = await fetch(
           `${this.$store.getters.getServerUrl}/movie`
       ).then(response => response.json())
-      console.log(this.listMovie)
-    }
+    },
+    goTo(id) {
+      this.$router.push({name: 'Single', params: {id: id}})
+    },
   },
   components: {
   }
