@@ -16,7 +16,7 @@ from split_settings.tools import include, optional
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 try:
-    from django_movie import secrets
+    from django_movie import my_secrets
 except ImportError:
     print('Import module with secret keys!')
 
@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+SECRET_KEY = my_secrets.SECRET_KEY
 ALLOWED_HOSTS = []
 
 
@@ -206,8 +206,8 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-SOCIAL_AUTH_VK_OAUTH2_KEY = secrets.SOCIAL_AUTH_VK_OAUTH2_KEY
-SOCIAL_AUTH_VK_OAUTH2_SECRET = secrets.SOCIAL_AUTH_VK_OAUTH2_SECRET
+SOCIAL_AUTH_VK_OAUTH2_KEY = my_secrets.SOCIAL_AUTH_VK_OAUTH2_KEY
+SOCIAL_AUTH_VK_OAUTH2_SECRET = my_secrets.SOCIAL_AUTH_VK_OAUTH2_SECRET
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',
@@ -250,7 +250,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': secrets.SECRET_KEY,
+    'SIGNING_KEY': my_secrets.SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
