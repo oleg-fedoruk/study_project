@@ -1,4 +1,25 @@
+__pycache__/
+*__pycache__/
+*py[cod]
+.pyc
+*pyc
+!*media/ .gitkeep
+media/*
+
+log/debug.log
+
+build
+doc
+home.rst
+make.bat
+Makefile
+
+doc-dev
+
 /django_movie/local_settings.py
 /env/
 /django_movie/my_secrets.py
 /db.sqlite3
+
+.env.dev
+
