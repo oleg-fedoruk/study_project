@@ -21,6 +21,14 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod.db
+  vue:
+    build:
+      context: ../vue-movie
+      dockerfile: Dockerfile.prod
+    volumes:
+      - vue_dist:/home/app/dist
+    depends_on:
+      - web
   nginx:
     build: ./nginx
     ports:
@@ -28,10 +36,14 @@ services:
     volumes:
       - static_volume:/home/app/web/static
       - media_volume:/home/app/web/media
+      - vue_dist:/home/app/dist
     depends_on:
       - web
+      - vue
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+  vue_dist:
+
